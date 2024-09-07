@@ -167,8 +167,8 @@ SIMPLE_JWT = {
 }
 
 SPECTACULAR_SETTINGS = {
-    'TITLE': 'XM Pro Ecosystem',
-    'DESCRIPTION': 'XM Pro Ecosystem API',
+    'TITLE': 'Restaurant Management',
+    'DESCRIPTION': 'An API for Restaurant Management',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
     'COMPONENT_SPLIT_REQUEST': True,
