@@ -49,54 +49,28 @@ class MenuItem(BaseModel):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='menu_items')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    stock = models.IntegerField(default=1)
 
 
     def __str__(self):
         return self.name
 
+    def is_in_stock(self):
+        return self.stock > 0
 
-# Order model
-class Order(BaseModel):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
-        ('cancelled', 'Cancelled'),
-        ('archived', 'Archived'),
-    ]
+    def reduce_stock(self, quantity):
+        if quantity > self.stock:
+            return False
 
-    customer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='orders')
-    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='orders')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+        self.stock -= quantity
+        self.save()
+        return True
 
-    def __str__(self):
-        return f"Order by {self.customer}"
+    def increase_stock(self, amount):
+        self.stock += amount
+        self.save()
 
-
-# OrderItem model
-class OrderItem(BaseModel):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='order_items')
-    menu_item = models.ForeignKey(MenuItem, on_delete=models.CASCADE, related_name='order_items')
-    quantity = models.IntegerField()
-
-    def __str__(self):
-        return f"{self.quantity} of {self.menu_item.name}"
+    class Meta:
+        ordering = ['name']
 
 
-# Payment model
-class Payment(BaseModel):
-    STATUS_CHOICES = [
-        ('pending', 'Pending'),
-        ('completed', 'Completed'),
-        ('failed', 'Failed'),
-    ]
-
-
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='payment')
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
-    transaction_id = models.CharField(max_length=255)
-
-
-    def __str__(self):
-        return f"Payment for order {self.order}"
