@@ -1,7 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from rest_framework import serializers
 
-from products.models import Order, MenuItem
+from products.models import Order, MenuItem, Payment
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -38,3 +38,9 @@ class OrderSerializer(serializers.ModelSerializer):
         product.stock -= order.quantity
         product.save()
         return order
+
+
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Payment
+        fields = '__all__'
