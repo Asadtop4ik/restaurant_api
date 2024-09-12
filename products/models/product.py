@@ -14,6 +14,7 @@ class Restaurant(BaseModel):
     ]
 
     name = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='restaurants/', null=True, blank=True)
     description = models.TextField()
     address = models.CharField(max_length=255)
     contact_phone = models.CharField(max_length=255)
@@ -46,6 +47,7 @@ class MenuItem(BaseModel):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menu_items')
     name = models.CharField(max_length=255)
     description = models.TextField()
+    image = models.ImageField(upload_to='menu_items/', null=True, blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='menu_items')
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
