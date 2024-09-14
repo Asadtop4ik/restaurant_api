@@ -37,6 +37,16 @@ class Category(BaseModel):
         return self.name
 
 
+class Menu(BaseModel):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menus')
+    name = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.restaurant.name} - {self.name}"
+
+
 # MenuItem model
 class MenuItem(BaseModel):
     STATUS_CHOICES = [
@@ -44,6 +54,7 @@ class MenuItem(BaseModel):
         ('archived', 'Archived'),
     ]
 
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='items')
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE, related_name='menu_items')
     name = models.CharField(max_length=255)
     description = models.TextField()
