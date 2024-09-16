@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from products.models import MenuItem, Restaurant, Category, Menu
-from products.serializers import MenuItemSerializer, RestaurantSerializer, CategorySerializer, MenuSerializer
+from products.models import MenuItem, Restaurant, Menu
+from products.serializers import MenuItemSerializer, RestaurantSerializer, MenuSerializer
 from rest_framework.parsers import MultiPartParser, FormParser
 from drf_spectacular.utils import extend_schema
 from rest_framework.decorators import action
@@ -25,13 +25,6 @@ class RestaurantViewSet(viewsets.ModelViewSet):
         menus = Menu.objects.filter(restaurant=restaurant)
         serializer = MenuSerializer(menus, many=True)
         return Response(serializer.data)
-
-
-@extend_schema(tags=['Categories'])
-class CategoryViewSet(viewsets.ModelViewSet):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-    parser_classes = [MultiPartParser, FormParser]
 
 
 @extend_schema(tags=['Menus'])

@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-zr@s=9dfuar0w0n_qq$pzx&v11=^rh_39l8+rb5gu@s9%e(@g0
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["humox.pythonanywhere.com"]
+ALLOWED_HOSTS = ["humox.pythonanywhere.com", "localhost", "127.0.0.1"]
 AUTH_USER_MODEL = 'custom_auth.User'
 
 # Application definition

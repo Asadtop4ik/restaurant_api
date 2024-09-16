@@ -1,2 +1,2 @@
 from .order import OrderViewSet, PaymentViewSet
-from .product import MenuItemViewSet, RestaurantViewSet, CategoryViewSet, MenuViewSet
+from .product import MenuItemViewSet, RestaurantViewSet, MenuViewSet
