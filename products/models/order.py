@@ -10,14 +10,14 @@ class Order(BaseModel):
     PENDING = 'Pending'
     PROCESSING = 'Processing'
     SHIPPED = 'Shipped'
-    DELIVERED = 'Delivered'
+    COMPLETED = 'Completed'
     CANCELED = 'Canceled'
 
     STATUS_CHOICES = [
         (PENDING, 'Pending'),
         (PROCESSING, 'Processing'),
         (SHIPPED, 'Shipped'),
-        (DELIVERED, 'Delivered'),
+        (COMPLETED, 'Completed'),
         (CANCELED, 'Canceled'),
     ]
 
@@ -38,7 +38,7 @@ class Order(BaseModel):
         allowed_transitions = {
             self.PENDING: [self.PROCESSING, self.CANCELED],
             self.PROCESSING: [self.SHIPPED, self.CANCELED],
-            self.SHIPPED: [self.DELIVERED, self.CANCELED],
+            self.SHIPPED: [self.COMPLETED, self.CANCELED],
         }
 
         return new_status in allowed_transitions.get(self.status, [])
